@@ -6,21 +6,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/especialidades")
-public class EspecialidadeController {
+@RequestMapping("/consultas")
+public class ConsultaController {
 
     @GetMapping
-    public String getEspecialidades() {
-        return "Hello World from EspecialidadeController!";
+    public String getConsultas() {
+        return "Hello World from ConsultaController!";
     }
 
     @GetMapping("/{id}")
     public String consultaPorId(@PathVariable Long id) {
-        return "Especialidade por ID: " + id;
+        return "Consulta por ID: " + id;
     }
 
     @GetMapping("/medico/{medicoId}")
-    public String consultaEspecialidadePorMedico(@PathVariable Long medicoId) {
-        return "Especialidade por Medico: " + medicoId;
+    public String consultaConsultasPorMedico(@PathVariable Long medicoId) {
+        return "Consultas por Medico: " + medicoId;
     }
 }

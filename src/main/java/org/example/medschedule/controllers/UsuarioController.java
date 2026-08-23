@@ -19,9 +19,8 @@ public class UsuarioController {
         return "Usuarios por ID: " + id;
     }
 
-    @GetMapping("/empresa/{empresaId}")
-    public String ConsultaUsuarioPorEmpresa(@PathVariable Long empresaId) {
-        return "Empresa por Empresa: " + empresaId;
-
+    @GetMapping("/especialidade/{especialidadeId}")
+    public String consultaUsuarioPorEspecialidade(@PathVariable Long especialidadeId) {
+        return "Usuarios por Especialidade: " + especialidadeId;
     }
 }
