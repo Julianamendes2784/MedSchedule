@@ -7,20 +7,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/usuarios")
+
 public class UsuarioController {
 
     @GetMapping
-    public String getUsuarios() {
-        return "Hello World from UsuarioController!";
+    public String ConsultaUsuario (){
+        return "Hello World!";
     }
 
     @GetMapping("/{id}")
-    public String consultaPorId(@PathVariable Long id) {
-        return "Usuarios por ID: " + id;
+    public String ConsultaUsuarioPorId(@PathVariable Long id){
+        return "Usuario por ID" + id;
+
+    }
+    @GetMapping("/empresa/{empresaId}")
+    public String ConsultaUsuarioPorEmpresa(@PathVariable Long empresaId){
+        return "Empresa por empresa: "+ empresaId;
     }
 
-    @GetMapping("/especialidade/{especialidadeId}")
-    public String consultaUsuarioPorEspecialidade(@PathVariable Long especialidadeId) {
-        return "Usuarios por Especialidade: " + especialidadeId;
-    }
+
 }
