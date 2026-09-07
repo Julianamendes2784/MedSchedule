@@ -1,4 +1,4 @@
-package org.example.medschedule.models;
+package org.example.medschedule.entities;
 
 public enum Role {
     MEDICO,
