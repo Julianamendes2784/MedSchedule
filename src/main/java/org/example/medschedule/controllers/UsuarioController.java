@@ -38,6 +38,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioRequest);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> AtualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioRequest) {
+        usuarioRequest.setId(id);
+        return ResponseEntity.ok(usuarioRequest);
+    }
+
 
 
 }

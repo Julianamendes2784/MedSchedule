@@ -1,9 +1,8 @@
 package org.example.medschedule.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.medschedule.entities.Consulta;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/consultas")
@@ -22,5 +21,16 @@ public class ConsultaController {
     @GetMapping("/medico/{medicoId}")
     public String consultaConsultasPorMedico(@PathVariable Long medicoId) {
         return "Consultas por Medico: " + medicoId;
+    }
+
+    @PostMapping
+    public ResponseEntity<Consulta> CadastrarConsulta(@RequestBody Consulta consultaRequest) {
+        return ResponseEntity.ok(consultaRequest);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Consulta> AtualizarConsulta(@PathVariable Long id, @RequestBody Consulta consultaRequest) {
+        consultaRequest.setId(id);
+        return ResponseEntity.ok(consultaRequest);
     }
 }

@@ -1,9 +1,8 @@
 package org.example.medschedule.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.medschedule.entities.Especialidade;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/especialidades")
@@ -22,5 +21,16 @@ public class EspecialidadeController {
     @GetMapping("/medico/{medicoId}")
     public String consultaEspecialidadePorMedico(@PathVariable Long medicoId) {
         return "Especialidade por Medico: " + medicoId;
+    }
+
+    @PostMapping
+    public ResponseEntity<Especialidade> CadastrarEspecialidade(@RequestBody Especialidade especialidadeRequest) {
+        return ResponseEntity.ok(especialidadeRequest);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Especialidade> AtualizarEspecialidade(@PathVariable Long id, @RequestBody Especialidade especialidadeRequest) {
+        especialidadeRequest.setId(id);
+        return ResponseEntity.ok(especialidadeRequest);
     }
 }
