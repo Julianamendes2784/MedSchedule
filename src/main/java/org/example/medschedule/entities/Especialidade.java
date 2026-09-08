@@ -1,10 +1,18 @@
 package org.example.medschedule.entities;
 
+import java.time.LocalDateTime;
+
 public class Especialidade {
 
     private Long id;
 
     private String nome;
+
+    private String status;
+
+    private LocalDateTime dataCadastro;
+
+    private LocalDateTime dataAtualizacao;
 
     public Especialidade() {
     }
@@ -27,5 +35,29 @@ public class Especialidade {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return this.dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return this.dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 }
