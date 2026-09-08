@@ -33,4 +33,15 @@ public class PacienteController {
         pacienteRequest.setId(id);
         return ResponseEntity.ok(pacienteRequest);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Paciente> AtualizarParcialPaciente(@PathVariable Long id, @RequestBody Paciente pacienteRequest) {
+        pacienteRequest.setId(id);
+        return ResponseEntity.ok(pacienteRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> DeletarPaciente(@PathVariable Long id) {
+        return ResponseEntity.noContent().build();
+    }
 }
