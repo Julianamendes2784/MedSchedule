@@ -33,4 +33,15 @@ public class EspecialidadeController {
         especialidadeRequest.setId(id);
         return ResponseEntity.ok(especialidadeRequest);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Especialidade> AtualizarParcialEspecialidade(@PathVariable Long id, @RequestBody Especialidade especialidadeRequest) {
+        especialidadeRequest.setId(id);
+        return ResponseEntity.ok(especialidadeRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> DeletarEspecialidade(@PathVariable Long id) {
+        return ResponseEntity.noContent().build();
+    }
 }

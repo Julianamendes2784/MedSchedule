@@ -44,6 +44,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioRequest);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Usuario> AtualizarParcialUsuario(@PathVariable Long id, @RequestBody Usuario usuarioRequest) {
+        usuarioRequest.setId(id);
+        return ResponseEntity.ok(usuarioRequest);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> DeletarUsuario(@PathVariable Long id) {
+        return ResponseEntity.noContent().build();
+    }
 
 }

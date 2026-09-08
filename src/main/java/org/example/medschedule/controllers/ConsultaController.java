@@ -33,4 +33,15 @@ public class ConsultaController {
         consultaRequest.setId(id);
         return ResponseEntity.ok(consultaRequest);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Consulta> AtualizarParcialConsulta(@PathVariable Long id, @RequestBody Consulta consultaRequest) {
+        consultaRequest.setId(id);
+        return ResponseEntity.ok(consultaRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> DeletarConsulta(@PathVariable Long id) {
+        return ResponseEntity.noContent().build();
+    }
 }
