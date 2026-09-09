@@ -1,19 +1,34 @@
 package org.example.medschedule.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Consulta {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
     private Paciente paciente;
 
+    @ManyToOne
     private Usuario medico;
 
+    @ManyToOne
     private Especialidade especialidade;
 
     private String dataHora;
 
+    @Enumerated(EnumType.STRING)
     private StatusConsulta status;
 
     private LocalDateTime dataCadastro;
