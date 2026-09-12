@@ -39,6 +39,7 @@ public class UsuarioController {
         usuarioBanco.setNome(usuarioRequest.getNome());
         usuarioBanco.setCpf(usuarioRequest.getCpf());
         usuarioBanco.setDataNascimento(usuarioRequest.getDataNascimento());
+        usuarioBanco.setSenha(usuarioRequest.getSenha());
         usuarioBanco.setDataCadastro(LocalDateTime.now());
         usuarioBanco.setStatus("A");
 
@@ -55,6 +56,7 @@ public class UsuarioController {
             usuarioBanco.setNome(usuarioRequest.getNome());
             usuarioBanco.setCpf(usuarioRequest.getCpf());
             usuarioBanco.setDataNascimento(usuarioRequest.getDataNascimento());
+            usuarioBanco.setSenha(usuarioRequest.getSenha());
             usuarioBanco.setDataAtualizacao(LocalDateTime.now());
             usuarioRepository.save(usuarioBanco);
 
