@@ -7,19 +7,27 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entidade Usuario: representa quem usa o sistema (no domínio da clínica, o médico
+ * que atende as consultas). É mapeada para a tabela "usuario" no PostgreSQL.
+ * Também guarda a senha usada no endpoint de login.
+ */
 @Entity
 public class Usuario {
 
+    // Construtor vazio: obrigatório para o JPA/Hibernate instanciar a entidade.
     public Usuario(){
 
     }
 
+    // Construtor de conveniência com os dados principais.
     public Usuario(String nome, String cpf, String dataNascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
     }
 
+    // Chave primária, gerada automaticamente pelo banco (auto incremento).
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -27,10 +35,12 @@ public class Usuario {
 
     private String nome;
 
+    // O CPF é usado como "login" no endpoint /login.
     private String cpf;
 
     private String dataNascimento;
 
+    // Status lógico: "A" = ativo, "D" = deletado (exclusão lógica).
     private String status;
 
     private LocalDateTime dataCadastro;
@@ -38,6 +48,8 @@ public class Usuario {
     private LocalDateTime dataAtualizacao;
 
     private String senha;
+
+    // ---- Getters e setters (encapsulamento dos atributos privados) ----
 
     public String getSenha() {
         return this.senha;

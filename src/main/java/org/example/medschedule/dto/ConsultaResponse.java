@@ -1,10 +1,15 @@
-package org.example.medschedule.DTO;
+package org.example.medschedule.dto;
 
+/**
+ * DTO de SAÍDA das operações de escrita em Consulta: id do registro afetado + mensagem de confirmação.
+ */
 public class ConsultaResponse {
 
+    // Construtor vazio: necessário para o Jackson serializar/desserializar o objeto.
     public ConsultaResponse() {
     }
 
+    // Construtor usado pelo controller para montar a resposta já preenchida.
     public ConsultaResponse(Long id, String mensagem) {
         this.id = id;
         this.mensagem = mensagem;
@@ -13,6 +18,8 @@ public class ConsultaResponse {
     private Long id;
 
     private String mensagem;
+
+    // ---- Getters e setters (encapsulamento) ----
 
     public Long getId() {
         return id;

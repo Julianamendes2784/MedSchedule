@@ -10,24 +10,34 @@ import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entidade Consulta: representa um agendamento que liga um Paciente, um médico (Usuario)
+ * e uma Especialidade em uma data/hora. É mapeada para a tabela "consulta" no PostgreSQL.
+ */
 @Entity
 public class Consulta {
 
+    // Chave primária, gerada automaticamente pelo banco (auto incremento).
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // @ManyToOne = muitas consultas para um paciente. Gera a coluna de chave estrangeira "paciente_id".
     @ManyToOne
     private Paciente paciente;
 
+    // Muitas consultas para um médico (Usuario). Gera a chave estrangeira "medico_id".
     @ManyToOne
     private Usuario medico;
 
+    // Muitas consultas para uma especialidade. Gera a chave estrangeira "especialidade_id".
     @ManyToOne
     private Especialidade especialidade;
 
     private String dataHora;
 
+    // Guarda o enum como TEXTO ("AGENDADA", "REALIZADA", "CANCELADA") no banco,
+    // em vez do número da posição, o que evita quebrar dados se a ordem do enum mudar.
     @Enumerated(EnumType.STRING)
     private StatusConsulta status;
 
@@ -35,9 +45,11 @@ public class Consulta {
 
     private LocalDateTime dataAtualizacao;
 
+    // Construtor vazio: obrigatório para o JPA/Hibernate instanciar a entidade.
     public Consulta() {
     }
 
+    // Construtor de conveniência com os dados principais.
     public Consulta(Paciente paciente, Usuario medico, Especialidade especialidade, String dataHora, StatusConsulta status) {
         this.paciente = paciente;
         this.medico = medico;
@@ -45,6 +57,8 @@ public class Consulta {
         this.dataHora = dataHora;
         this.status = status;
     }
+
+    // ---- Getters e setters (encapsulamento dos atributos privados) ----
 
     public Long getId() {
         return this.id;

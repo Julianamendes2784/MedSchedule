@@ -1,7 +1,13 @@
-package org.example.medschedule.DTO;
+package org.example.medschedule.dto;
 
+/**
+ * DTO (Data Transfer Object) de ENTRADA para cadastrar/atualizar um Paciente.
+ * Representa exatamente o JSON que o cliente envia no corpo do POST/PUT, sem expor
+ * campos internos da entidade (id, status, datas), que são controlados pelo servidor.
+ */
 public class PacienteRequest {
 
+    // Construtor vazio: necessário para o Jackson converter o JSON recebido neste objeto.
     public PacienteRequest() {
     }
 
@@ -12,6 +18,8 @@ public class PacienteRequest {
     private String telefone;
 
     private String dataNascimento;
+
+    // ---- Getters e setters (encapsulamento) ----
 
     public String getNome() {
         return nome;

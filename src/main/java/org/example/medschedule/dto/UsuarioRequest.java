@@ -1,7 +1,11 @@
-package org.example.medschedule.DTO;
+package org.example.medschedule.dto;
 
+/**
+ * DTO de ENTRADA para cadastrar/atualizar um Usuario: o JSON enviado no corpo do POST/PUT.
+ */
 public class UsuarioRequest {
 
+    // Construtor vazio: necessário para o Jackson converter o JSON recebido neste objeto.
     public UsuarioRequest() {
     }
 
@@ -12,6 +16,8 @@ public class UsuarioRequest {
     private String dataNascimento;
 
     private String senha;
+
+    // ---- Getters e setters (encapsulamento) ----
 
     public String getSenha() {
         return senha;

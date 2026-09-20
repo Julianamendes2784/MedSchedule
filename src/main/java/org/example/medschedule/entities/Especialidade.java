@@ -7,27 +7,37 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entidade Especialidade: representa uma especialidade médica (ex.: Cardiologia).
+ * É mapeada para a tabela "especialidade" no PostgreSQL.
+ */
 @Entity
 public class Especialidade {
 
+    // Chave primária, gerada automaticamente pelo banco (auto incremento).
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
 
+    // Status lógico: "A" = ativo, "D" = deletado (exclusão lógica).
     private String status;
 
     private LocalDateTime dataCadastro;
 
     private LocalDateTime dataAtualizacao;
 
+    // Construtor vazio: obrigatório para o JPA/Hibernate instanciar a entidade.
     public Especialidade() {
     }
 
+    // Construtor de conveniência.
     public Especialidade(String nome) {
         this.nome = nome;
     }
+
+    // ---- Getters e setters (encapsulamento dos atributos privados) ----
 
     public Long getId() {
         return this.id;

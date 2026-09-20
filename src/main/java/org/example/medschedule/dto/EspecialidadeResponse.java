@@ -1,10 +1,15 @@
-package org.example.medschedule.DTO;
+package org.example.medschedule.dto;
 
+/**
+ * DTO de SAÍDA das operações de escrita em Especialidade: id do registro afetado + mensagem de confirmação.
+ */
 public class EspecialidadeResponse {
 
+    // Construtor vazio: necessário para o Jackson serializar/desserializar o objeto.
     public EspecialidadeResponse() {
     }
 
+    // Construtor usado pelo controller para montar a resposta já preenchida.
     public EspecialidadeResponse(Long id, String mensagem) {
         this.id = id;
         this.mensagem = mensagem;
@@ -13,6 +18,8 @@ public class EspecialidadeResponse {
     private Long id;
 
     private String mensagem;
+
+    // ---- Getters e setters (encapsulamento) ----
 
     public Long getId() {
         return id;
