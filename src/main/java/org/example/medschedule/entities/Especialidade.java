@@ -21,7 +21,7 @@ public class Especialidade {
 
     private String nome;
 
-    // Status lógico: "A" = ativo, "D" = deletado (exclusão lógica).
+    // Situação do registro: nasce "A" (ativo) no cadastro e pode ser alterada pela rota PATCH /status.
     private String status;
 
     private LocalDateTime dataCadastro;

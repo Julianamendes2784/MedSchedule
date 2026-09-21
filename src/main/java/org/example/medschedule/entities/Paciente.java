@@ -31,7 +31,7 @@ public class Paciente {
 
     private String dataNascimento;
 
-    // Status lógico do registro: "A" = ativo, "D" = deletado (exclusão lógica).
+    // Situação do registro: nasce "A" (ativo) no cadastro e pode ser alterada pela rota PATCH /status.
     private String status;
 
     // Quando o registro foi criado.

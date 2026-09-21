@@ -6,13 +6,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
 /**
- * Entidade Consulta: representa um agendamento que liga um Paciente, um médico (Usuario)
- * e uma Especialidade em uma data/hora. É mapeada para a tabela "consulta" no PostgreSQL.
+ * Entidade Consulta: representa um agendamento de um paciente com um médico e uma especialidade
+ * em uma data/hora. É mapeada para a tabela "consulta" no PostgreSQL.
+ *
+ * Nesta fase NÃO há relacionamentos entre tabelas (sem @ManyToOne/chave estrangeira):
+ * paciente, médico e especialidade são guardados apenas como ids em colunas simples.
  */
 @Entity
 public class Consulta {
@@ -22,17 +24,14 @@ public class Consulta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @ManyToOne = muitas consultas para um paciente. Gera a coluna de chave estrangeira "paciente_id".
-    @ManyToOne
-    private Paciente paciente;
+    // Id do paciente atendido (coluna simples "paciente_id", sem chave estrangeira).
+    private Long pacienteId;
 
-    // Muitas consultas para um médico (Usuario). Gera a chave estrangeira "medico_id".
-    @ManyToOne
-    private Usuario medico;
+    // Id do médico (Usuario) que fará o atendimento (coluna "medico_id").
+    private Long medicoId;
 
-    // Muitas consultas para uma especialidade. Gera a chave estrangeira "especialidade_id".
-    @ManyToOne
-    private Especialidade especialidade;
+    // Id da especialidade da consulta (coluna "especialidade_id").
+    private Long especialidadeId;
 
     private String dataHora;
 
@@ -50,10 +49,10 @@ public class Consulta {
     }
 
     // Construtor de conveniência com os dados principais.
-    public Consulta(Paciente paciente, Usuario medico, Especialidade especialidade, String dataHora, StatusConsulta status) {
-        this.paciente = paciente;
-        this.medico = medico;
-        this.especialidade = especialidade;
+    public Consulta(Long pacienteId, Long medicoId, Long especialidadeId, String dataHora, StatusConsulta status) {
+        this.pacienteId = pacienteId;
+        this.medicoId = medicoId;
+        this.especialidadeId = especialidadeId;
         this.dataHora = dataHora;
         this.status = status;
     }
@@ -68,28 +67,28 @@ public class Consulta {
         this.id = id;
     }
 
-    public Paciente getPaciente() {
-        return this.paciente;
+    public Long getPacienteId() {
+        return this.pacienteId;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setPacienteId(Long pacienteId) {
+        this.pacienteId = pacienteId;
     }
 
-    public Usuario getMedico() {
-        return this.medico;
+    public Long getMedicoId() {
+        return this.medicoId;
     }
 
-    public void setMedico(Usuario medico) {
-        this.medico = medico;
+    public void setMedicoId(Long medicoId) {
+        this.medicoId = medicoId;
     }
 
-    public Especialidade getEspecialidade() {
-        return this.especialidade;
+    public Long getEspecialidadeId() {
+        return this.especialidadeId;
     }
 
-    public void setEspecialidade(Especialidade especialidade) {
-        this.especialidade = especialidade;
+    public void setEspecialidadeId(Long especialidadeId) {
+        this.especialidadeId = especialidadeId;
     }
 
     public String getDataHora() {

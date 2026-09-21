@@ -101,17 +101,13 @@ public class PacienteController {
     }
 
     /**
-     * DELETE /pacientes/{id} -> exclusão LÓGICA: o registro não é apagado da tabela,
-     * apenas marcado com status "D" (deletado), preservando o histórico. Retorna 200 ou 404.
+     * DELETE /pacientes/{id} -> remove o registro do banco de dados (DELETE FROM paciente).
+     * Retorna 200 OK se removeu ou 404 Not Found se o id não existe.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<PacienteResponse> deletarPaciente(@PathVariable Long id) {
-        Paciente pacienteBanco = pacienteRepository.findById(id).orElse(null);
-
-        if (pacienteBanco != null) {
-            pacienteBanco.setStatus("D");
-            pacienteBanco.setDataAtualizacao(LocalDateTime.now());
-            pacienteRepository.save(pacienteBanco);
+        if (pacienteRepository.existsById(id)) {
+            pacienteRepository.deleteById(id);
 
             return ResponseEntity.ok().build();
         }

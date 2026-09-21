@@ -4,10 +4,7 @@ import org.example.medschedule.dto.AtualizaStatusConsultaRequest;
 import org.example.medschedule.dto.ConsultaRequest;
 import org.example.medschedule.dto.ConsultaResponse;
 import org.example.medschedule.entities.Consulta;
-import org.example.medschedule.entities.Especialidade;
-import org.example.medschedule.entities.Paciente;
 import org.example.medschedule.entities.StatusConsulta;
-import org.example.medschedule.entities.Usuario;
 import org.example.medschedule.repositories.ConsultaRepository;
 import org.example.medschedule.repositories.EspecialidadeRepository;
 import org.example.medschedule.repositories.PacienteRepository;
@@ -21,8 +18,9 @@ import java.util.List;
 
 /**
  * Controller REST de Consulta: expõe o CRUD de agendamentos em /consultas.
- * Como uma consulta se relaciona com paciente, médico e especialidade, este controller
- * também usa os repositories dessas entidades para localizar cada uma pelo id recebido.
+ * A consulta referencia paciente, médico e especialidade apenas pelo id (sem relacionamento entre
+ * tabelas); por isso este controller também usa os repositories dessas entidades para verificar
+ * se cada id informado existe antes de agendar.
  */
 @RestController
 @RequestMapping("/consultas")
@@ -70,20 +68,25 @@ public class ConsultaController {
      */
     @PostMapping
     public ResponseEntity<ConsultaResponse> cadastrarConsulta(@RequestBody ConsultaRequest consultaRequest) {
-        // Busca no banco cada entidade referenciada pelo id.
-        Paciente paciente = pacienteRepository.findById(consultaRequest.getPacienteId()).orElse(null);
-        Usuario medico = usuarioRepository.findById(consultaRequest.getMedicoId()).orElse(null);
-        Especialidade especialidade = especialidadeRepository.findById(consultaRequest.getEspecialidadeId()).orElse(null);
+        // Os três ids são obrigatórios: sem eles não há como agendar (400 Bad Request).
+        if (consultaRequest.getPacienteId() == null
+                || consultaRequest.getMedicoId() == null
+                || consultaRequest.getEspecialidadeId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        // Só agenda se as três existirem.
-        if (paciente == null || medico == null || especialidade == null) {
+        // Só agenda se paciente, médico e especialidade existirem (senão 404).
+        // A consulta guarda apenas os ids, sem relacionamento (chave estrangeira) entre as tabelas.
+        if (!pacienteRepository.existsById(consultaRequest.getPacienteId())
+                || !usuarioRepository.existsById(consultaRequest.getMedicoId())
+                || !especialidadeRepository.existsById(consultaRequest.getEspecialidadeId())) {
             return ResponseEntity.notFound().build();
         }
 
         Consulta consultaBanco = new Consulta();
-        consultaBanco.setPaciente(paciente);
-        consultaBanco.setMedico(medico);
-        consultaBanco.setEspecialidade(especialidade);
+        consultaBanco.setPacienteId(consultaRequest.getPacienteId());
+        consultaBanco.setMedicoId(consultaRequest.getMedicoId());
+        consultaBanco.setEspecialidadeId(consultaRequest.getEspecialidadeId());
         consultaBanco.setDataHora(consultaRequest.getDataHora());
         consultaBanco.setStatus(StatusConsulta.AGENDADA); // toda consulta nova começa como AGENDADA
         consultaBanco.setDataCadastro(LocalDateTime.now());
@@ -124,15 +127,14 @@ public class ConsultaController {
         return ResponseEntity.notFound().build();
     }
 
-    /** DELETE /consultas/{id} -> exclusão LÓGICA: em vez de apagar, marca a consulta como CANCELADA. */
+    /**
+     * DELETE /consultas/{id} -> remove o registro do banco de dados (200 OK ou 404 Not Found).
+     * Para apenas cancelar mantendo o histórico, use PATCH /consultas/{id}/status com "CANCELADA".
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<ConsultaResponse> deletarConsulta(@PathVariable Long id) {
-        Consulta consultaBanco = consultaRepository.findById(id).orElse(null);
-
-        if (consultaBanco != null) {
-            consultaBanco.setStatus(StatusConsulta.CANCELADA);
-            consultaBanco.setDataAtualizacao(LocalDateTime.now());
-            consultaRepository.save(consultaBanco);
+        if (consultaRepository.existsById(id)) {
+            consultaRepository.deleteById(id);
 
             return ResponseEntity.ok().build();
         }

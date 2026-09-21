@@ -11,6 +11,6 @@ import java.util.List;
 public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     // "Query method": o Spring gera o SQL a partir do nome do método
-    // (busca as consultas em que medico.id = medicoId).
+    // (busca as consultas em que a coluna medico_id = medicoId).
     List<Consulta> findByMedicoId(Long medicoId);
 }

@@ -88,15 +88,11 @@ public class EspecialidadeController {
         return ResponseEntity.notFound().build();
     }
 
-    /** DELETE /especialidades/{id} -> exclusão LÓGICA: marca com status "D" em vez de apagar a linha. */
+    /** DELETE /especialidades/{id} -> remove o registro do banco de dados (200 OK ou 404 Not Found). */
     @DeleteMapping("/{id}")
     public ResponseEntity<EspecialidadeResponse> deletarEspecialidade(@PathVariable Long id) {
-        Especialidade especialidadeBanco = especialidadeRepository.findById(id).orElse(null);
-
-        if (especialidadeBanco != null) {
-            especialidadeBanco.setStatus("D");
-            especialidadeBanco.setDataAtualizacao(LocalDateTime.now());
-            especialidadeRepository.save(especialidadeBanco);
+        if (especialidadeRepository.existsById(id)) {
+            especialidadeRepository.deleteById(id);
 
             return ResponseEntity.ok().build();
         }

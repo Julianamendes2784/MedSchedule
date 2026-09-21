@@ -94,15 +94,11 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
-    /** DELETE /usuarios/{id} -> exclusão LÓGICA: marca o usuário com status "D" em vez de apagar a linha. */
+    /** DELETE /usuarios/{id} -> remove o registro do banco de dados (200 OK ou 404 Not Found). */
     @DeleteMapping("/{id}")
     public ResponseEntity<UsuarioResponse> deletarUsuario(@PathVariable Long id) {
-        Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
-
-        if (usuarioBanco != null) {
-            usuarioBanco.setStatus("D");
-            usuarioBanco.setDataAtualizacao(LocalDateTime.now());
-            usuarioRepository.save(usuarioBanco);
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
 
             return ResponseEntity.ok().build();
         }
