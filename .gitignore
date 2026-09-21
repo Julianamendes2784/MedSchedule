@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Configuracao local com senha do banco ###
+src/main/resources/application-local.properties
