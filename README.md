@@ -123,5 +123,5 @@ src/main/java/org/example/medschedule
 ## Observações
 
 - As entidades (`Paciente`, `Usuario`, `Especialidade` e `Consulta`) são isoladas: não há relacionamentos entre tabelas nesta fase. A consulta guarda apenas os ids de paciente, médico e especialidade.
-- O `DELETE` remove o registro definitivamente do banco de dados.
+- O `DELETE` remove a linha correspondente da tabela no banco de dados (exclusão física, conforme pedido no enunciado da avaliação). Para apenas cancelar uma consulta mantendo o registro, use `PATCH /consultas/{id}/status` com `{"status": "CANCELADA"}`.
 - A segurança (autenticação e autorização) será implementada em uma fase futura.
